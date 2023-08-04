@@ -1,0 +1,38 @@
+{
+    "version": 2,
+    "builds": [{
+        "src": "manage.py",
+        "use": "@vercel/python",
+        "config": {
+            "maxLambdaSize": "50mb"
+        }
+    }],
+    "routes": [{
+            "src": "/static/(.*)",
+            "headers": {
+                "cache-control": "s-maxage=604800"
+            },
+            "dest": "/static/$1"
+        },
+        {
+            "src": "/media/(.*)",
+            "headers": {
+                "cache-control": "s-maxage=604800"
+            },
+            "dest": "/media/$1"
+        },
+        {
+            "src": "/wordfile/",
+            "dest": "manage.py",
+            "methods": ["POST"]
+        },
+        {
+            "src": "/(.*)",
+            "dest": "manage.py",
+            "methods": ["GET"]
+        }
+    ],
+    "env": {
+        "DJANGO_SETTINGS_MODULE": "wordfile_project.settings"
+    }
+}
