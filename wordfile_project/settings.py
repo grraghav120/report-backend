@@ -129,4 +129,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOWED_ORIGINS =[
     "http://localhost:4200",  # Your Angular app's URL
     # Add more allowed origins as needed
+    'https://reporting-system-123.netlify.app',
 ]
