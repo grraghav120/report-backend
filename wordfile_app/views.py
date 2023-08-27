@@ -31,6 +31,19 @@ class WordFileView(APIView):
     def post(self, request, format=None):
         data = json.loads(request.body)
         # print(data)
+
+        # generate docx from data
+
+        # doc = Document()
+        # doc.add_heading(data['uhid'], level=1)
+        # doc.add_paragraph(data['FullName'])
+        # response = HttpResponse(content_type='application/msword')
+        # response['Content-Disposition'] = 'attachment; filename="document.docx"'
+        # doc.save(response)
+        # return response
+        
+        # generate pdf from report.html
+
         pdf = render_to_pdf('wordfile_app/report.html', data)
         if pdf:
             # Set response headers for download
@@ -40,6 +53,10 @@ class WordFileView(APIView):
             return response
         else:
             return HttpResponse("Error generating PDF", status=500)
+
+
+        # waste code start
+
 
         # try:
         #     df_new = pd.DataFrame([data])
