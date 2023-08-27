@@ -44,7 +44,7 @@ class WordFileView(APIView):
         
         # generate pdf from report.html
 
-        pdf = render_to_pdf('wordfile_app/report.html', data)
+        pdf = render_to_pdf('report.html', data)
         if pdf:
             # Set response headers for download
             response = HttpResponse(pdf, content_type='application/pdf')
