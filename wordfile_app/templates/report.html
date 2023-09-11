@@ -1,0 +1,272 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{{FullName}} Chest XRay Report</title>
+    <style>
+      .mainContainer {
+        margin: 0px 20px;
+      }
+      body {
+        color: #000000;
+        background: #ffffff;
+        font-family: Arial;
+      }
+      .hostipaldetails {
+        text-align: center;
+      }
+
+      .hostipaldetails p {
+        font-size: 17px;
+        margin: 0px !important;
+      }
+
+      .uhidhead p{
+        /* text-align: right; */
+        padding-bottom: 0px !important;
+        margin: 0px !important;
+      }
+
+      #logo {
+        padding: 0px 0px 0px 0px;
+      }
+
+      #logo img {
+        width: 70px;
+      }
+      .state {
+        padding-top: 5px;
+      }
+      #patientDetails p{
+        font-size:14px;
+        padding: 0px !important;
+        margin: 0px !important;
+        display: flex;
+        justify-content: space-between;
+      }
+      #results p{
+        font-size: 13px;
+        padding: 0px !important;
+        margin: 0px !important;
+      }
+       table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            font-size: 14px;
+            padding: 2px;
+            text-align: left;
+        }
+        footer{
+            /* margin-top: 20px; */
+            float: right;
+            text-align: right;
+        }
+    </style>
+  </head>
+
+  <body>
+    <!-- Raghav Garg -->
+    <div class="mainContainer">
+      <div id="logo">
+        <img
+          src="{% static 'images/SNMC.jpg' %}"
+          class="brand-logo"
+          width="70"
+          alt="My image"
+          height="70"
+        >
+        <div class="hostipaldetails">
+          <p>S N MEDICAL COLLEGE AGRA</p>
+          <p class="state">Agra, Uttar Pradesh</p>
+        </div>
+      </div>
+      <table>
+        <thead>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Date: <b>{{date}}</b></td>
+                <td style="text-align: right;">UHID/Patient ID: <b>{{uhid}} </b></td>
+            </tr>
+        </tbody>
+      </table>
+
+      <hr />
+      <table>
+        <thead>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Name: <b> {{FullName}} </b></td>
+                <td>Age/Sex: <b> {{age}}</b></td>
+                <td>Reff By:  <b>{{refby}}</b></td>
+            </tr>
+        </tbody>
+      </table>
+      <hr>
+      <div id="results">
+        <p style="text-align: center;">Investigation : X-Ray Chest PA view</p>
+        <p><b>Results:</b></p>
+        <p style="padding: 5px; text-decoration: underline;"><b>Lung Field:</b></p>
+        {% if BronchoVascularMarking == "Normal" %}
+            <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The Broncho Vascular Markings appears {{BronchoVascularMarking}}</p>
+        {% else %}
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The Broncho Vascular Markings are <b>{{BronchoVascularMarking}}</b> in <b>{{BronchoVascularMarkingSide}} {{BronchoVascularMarkingRegion}}</b> Lung.</p>
+        {% endif %}
+
+        {% if opacity == "Absent" %}
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No Opacity found in either of the lung.</p>
+        {% elif opacity == "Present" %}
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The opacity is <b>{{opacity}}</b> in <b>{{opacitySide}} {{opacityRegion}} lung.</b></p>
+        {% endif %}
+
+        {% if cavity == "Absent" %}
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No cavity found in either of the lung.</p>
+        {% elif cavity == "Present" %}
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The cavity is <b>{{cavity}}</b> in <b>{{cavitySide}} {{cavityRegion}} lung.</b></p>
+        {% endif %}
+
+        {% if masses == "Absent" %}
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No masses found in either of the lung.</p>
+        {% elif masses == "Present" %}
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The masses is <b>{{masses}}</b> in <b>{{massesSide}} {{massesRegion}} lung.</b></p>
+        {% endif %}
+
+        {% if hilumSide == "Normal" %}
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The hilum in {{hilumSide}} lung appears {{hilum}}.</p>
+        {% else %}
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The hilum in <b>{{hilumSide}}</b> lung shows <b>{{hilum}} {{ProminentHilumSpecify}}</b>.</p>
+        {% endif %}
+
+
+        <p style="padding: 5px; text-decoration: underline;"><b>Mediastinum Info:</b></p>
+
+        {% if trachea == "Central" %}
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The trachea is {{trachea}}</p>
+        {% else %}
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The trachea is {{trachea}}ed towards {{tracheaShiftSide}} </p>
+        {% endif %}
+
+        {% if mediastinal == "Shift" %}
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The mediastinal is {{mediastinal}}ed towards {{mediastinalShiftSide}} </p>
+        {% elif mediastinal == "Nil" %}
+        {% else %}
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The mediastinal is {{mediastinal}} </p>
+        {% endif %}
+
+
+        {% if LymphNodes == "Enlarged" %}
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The Lymph Nodes are {{LymphNodes}}</p>
+        {% else %}
+        {% endif %}
+
+        <p style="padding: 5px; text-decoration: underline;"><b>Cadiac Info:</b></p>
+
+        {% if CardiacSize == "Nil" %}
+        {% else %}
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The Cardiac Size is {{CardiacSize}}</p>
+        {% endif %}
+
+        {% if CardiacShape == "Nil" %}
+        {% elif CardiacShape == "Abnormal" %}
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The Cardiac Shape is {{CardiacShapeAbnormal}}</p>
+        {% else %}
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The Cardiac Shape is {{CardiacShape}}</p>
+        {% endif %}
+
+        {% if AorticKnuckle == "Nil" %}
+        {% else %}
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The Aortic Knuckle is {{AorticKnuckle}}</p>
+        {% endif %}
+
+        {% if AorticKnuckleCalcification == "Nil" %}
+        {% else %}
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The Aortic Knuckle Calcification is {{AorticKnuckleCalcification}}</p>
+        {% endif %}
+
+
+        {% if AorticKnuckleUnfoldingofAorta == "Nil" %}
+        {% else %}
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The Aortic Knuckle Unfolding of Aorta is {{AorticKnuckleUnfoldingofAorta}}</p>
+        {% endif %}
+
+
+        <p style="padding: 5px;text-decoration: underline;"><b>Pleura Infomation:</b></p>
+
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The Costophrenic Angles in <b>{{CostophrenicAnglesSide}}</b> lung is <b>{{CostophrenicAngles}}</b>. </p>
+
+
+        {% if Pneumothorax == "Nil" %}
+        {% else %}
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The Pneumothorax is <b>{{Pneumothorax}}</b> in <b>{{PneumothoraxSide}}</b> lung.</p>
+        {% endif %}
+
+        <p style="padding: 5px; text-decoration: underline;"><b>Chest Wall Info:</b></p>
+
+        {% if BonyCage == "Nil" %}
+        {% elif BonyCage == "Normal" %}
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The Bony Cage is Normal.</p>
+        {% elif Finding == "Crowding of Ribs" %}
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The Bony Cage of {{BonyCageSide}} lung is {{Finding}}</p>
+        {% elif Finding == "Fracture" %}
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The Bony Cage of {{BonyCageSide}} lung is {{Finding}} and Fracture Rib Number is <b>{{FractureRibNumber}}</b>.</p>
+        {% elif Finding == "Dysplasia of Ribs" %}
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The Bony Cage of {{BonyCageSide}} lung shows {{Finding}} and the Rib Number is <b>{{FractureRibNumber}}</b>. </p>
+        {% elif Finding == "Bony Lesion" %}
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The Bony Cage of {{BonyCageSide}} lung shows <b>{{Bonylesion}}</b> {{Finding}}. </p>
+        {% endif %}
+
+        {% if SoftTissue == "Normal" %}
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The Soft Tissue appears {{SoftTissue}}.</p>
+        {% else %}
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The Soft Tissue shows <b>{{SoftTissueSide}}</b> side <b>{{SoftTissueAbnormal}}</b>.</p>
+        {% endif %}
+
+
+        {% if HemiDiaphragm == "Normal" %}
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The Hemi Diaphragm in {{HemiDiaphragmSide}} side appears {{HemiDiaphragm}}.</p>
+        {% else %}
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The Hemi Diaphragm in <b>{{HemiDiaphragmSide}}</b> side shows <b>{{HemiDiaphragmAbormal}}</b>.</p>
+        {% endif %}
+
+        {% if BreastShadow == "Nil" %}
+        {% elif BreastShadow == "Normal" %}
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The Breast Shadow is {{BreastShadow}}</p>
+        {% else %}
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The Breast Shadow of <b>{{BreastShadowSide}}</b> side shows <b>{{BreastShadowAbnormal}}</b>.</p>
+        {% endif %}
+
+        <br>
+
+        <p><b><u>IMPRESSION</u>:</b>&nbsp; X-ray images are suggestive of :-</p>
+
+        {% if BronchoVascularMarking == "Prominent" and opacity == "Present" and cavity == "Present" and masses == "Present"  %}
+          <p> - &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Broncho Vascular Markings, opacity, masses and cavity are present and and trachea is {{trachea}}</b></p>
+        {% elif BronchoVascularMarking == "Normal" %}
+          <p> - &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Broncho Vascular Marking appears Normal, hilum in {{hilumSide}} lung appears {{hilum}} and trachea is {{trachea}}.</p>
+        {% endif %}
+
+        {% if LymphNodes == "Enlarged" %}
+          <p> - &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Lymph Nodes are {{LymphNodes}}</p>
+        {% endif %}
+        {% if CardiacSize != "Nil" and CardiacShape != "Nil" %}
+          <p> - &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Cardiac size is {{CardiacSize}} and Cardiac Shape is {{CardiacShape}}</b>.</p>
+        {% elif CardiacSize != "Nil" and CardiacShape == "Nil" %}
+          <p> - &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cardiac size is {{CardiacSize}}</p>
+        {% endif %}
+
+        <p>- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Costophrenic Angles in <b>{{CostophrenicAnglesSide}}</b> lung is <b>{{CostophrenicAngles}}</b> and Hemi Diaphragm in {{HemiDiaphragmSide}} side appears {{HemiDiaphragm}} </p>
+
+        <br>
+        <p><b>Please correlate clinically</b></p>
+        <footer class="footer">
+            <p>Doctor's Name</p>
+            <p>Signature / Date</p>
+        </footer>
+
+      </div>
+    </div>
+  </body>
+</html>
