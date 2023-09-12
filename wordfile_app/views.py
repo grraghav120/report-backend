@@ -9,6 +9,10 @@ from io import BytesIO
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 
+from rest_framework import generics
+from .models import MedicalData
+from .serializers import MedicalDataSerializer
+
 def render_to_pdf(template_src, context_dict={}):#'report.html',data
     # new code by Raghav garg
     template = get_template(template_src)
@@ -58,23 +62,6 @@ class WordFileView(APIView):
             return HttpResponse("Error generating PDF", status=500)
 
 
-        # waste code start
-
-
-        # try:
-        #     df_new = pd.DataFrame([data])
-        #     file_name = 'data.xlsx'
-        #     if os.path.isfile(file_name):
-        #         df_old = pd.read_excel(file_name)
-        #         df_new = pd.concat([df_old, df_new])
-        #     df_new.to_excel(file_name, index=False)
-        # except Exception as e:
-        #     return HttpResponse(f"Failed to append data to Excel file: {str(e)}")
-
-       
-        # try:
-        #     response = FileResponse(open(file_path, 'rb'), content_type='application/msword')
-        #     response['Content-Disposition'] = f'attachment; filename="output.docx"'
-        #     return response
-        # except Exception as e:
-        #     return HttpResponse(f"Failed to return file: {str(e)}")
+class MedicalDataListCreateView(generics.ListCreateAPIView):
+    queryset = MedicalData.objects.all()
+    serializer_class = MedicalDataSerializer
