@@ -44,6 +44,12 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'wordfile_app',
+    'rest_framework.authtoken',
+    'dj_rest_auth',
+    'allauth',
+    'allauth.account',
+    'dj_rest_auth.registration',
+
 ]
 
 MIDDLEWARE = [
@@ -56,6 +62,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+        'allauth.account.middleware.AccountMiddleware',
+
+
 ]
 
 ROOT_URLCONF = 'wordfile_project.urls'
